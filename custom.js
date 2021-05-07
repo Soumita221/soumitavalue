@@ -1,4 +1,11 @@
-    //Posting data in home page
+ 
+ // This submission is for assignment for Full Stack Developer Training at Invide 
+ // Datetime Of Submission : 07-05-2021, 18:00 hrs
+ // Student Name :  Soumita Roy
+ // License : MIT
+     
+
+//Posting data in home page
     //Contains The home page details
     
     var retrievedData = localStorage.getItem("url_ls");
