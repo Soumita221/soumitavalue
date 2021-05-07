@@ -1,3 +1,2 @@
 # soumitavalue 
-hii...this is my first project 
-hello world
+This is my first project in HTML,CSS, JavaScript and Typescript
