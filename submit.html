@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News</title>
+    <link rel="stylesheet" href="./custom.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row1">
+        <p style="margin-left: 40px;">
+          <span style="font-size: 20px;"
+            ><strong
+              ><a href="index.html">Hacker News</a>&nbsp; &nbsp; &nbsp;</strong
+            ></span
+          ><span class="tab"><a href="index.html">News</a>&nbsp; </span
+          ><span style="font-size: 16px;">&nbsp;|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="analytics.html">Analytics</a>&nbsp;
+            &nbsp;</span
+          ><span style="font-size: 16px;">|&nbsp;</span
+          ><span class="tab">
+            &nbsp;<a href="notes.html">Notes</a>&nbsp; &nbsp;</span
+          ><span style="font-size: 16px;">|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="submit.html">Submit</a></span
+          >
+        </p>
+      </div>
+      <form class="submit_post" onsubmit="addEntry(event)">
+        <input
+          type="text"
+          class="title"
+          name="title"
+          id="title"
+          placeholder="Enter The title of post"
+        />
+        <input
+          type="text"
+          class="url"
+          name="url"
+          id="url"
+          placeholder="Enter The URL of post"
+        />
+        <button class="add">
+          Add
+        </button>
+      </form>
+    </div>
+
+    <script src="./custom.js"></script>
+
+    <script>
+
+
+      addEntry = (e) => {
+        e.preventDefault();
+
+        let entries = [];
+        let title = document.getElementById("title").value;
+        let url = document.getElementById("url").value;
+        if (checkURL(url) && titleLength(title.length)) {
+          if (localStorage.getItem("title_ls")) {
+            entries = JSON.parse(localStorage.getItem("title_ls"));
+            entries.push(title);
+            localStorage.setItem("title_ls", JSON.stringify(entries));
+          } else {
+            entries.push(title);
+            localStorage.setItem("title_ls", JSON.stringify([title]));
+          }
+          entries = [];
+
+          if (localStorage.getItem("url_ls")) {
+            entries = JSON.parse(localStorage.getItem("url_ls"));
+            entries.push(url);
+            localStorage.setItem("url_ls", JSON.stringify(entries));
+          } else {
+            entries.push(url);
+            localStorage.setItem("url_ls", JSON.stringify([url]));
+          }
+          
+
+          entries = [];
+          let timestamp = Date.now();
+
+          if (localStorage.getItem("timestamp_ls")) {
+            entries = JSON.parse(localStorage.getItem("timestamp_ls"));
+            entries.push(timestamp);
+            localStorage.setItem("timestamp_ls", JSON.stringify(entries));
+          } else {
+            entries.push(timestamp);
+            localStorage.setItem("timestamp_ls", JSON.stringify([timestamp]));
+          }
+          if (localStorage.getItem("n")) {
+            var nm = "vote" + localStorage.getItem("n");
+            localStorage.setItem(nm, 0);
+          } else {
+            localStorage.setItem("vote[0]", 0);
+          }
+          if (localStorage.getItem("n")) {
+            var nm = "flg" + localStorage.getItem("n");
+            localStorage.setItem(nm, 0);
+          } else {
+            localStorage.setItem("vote[0]", 0);
+          }
+          localStorage.setItem("n", JSON.stringify([entries.length]));
+
+          window.location.href = "index.html";
+        } 
+        else {
+          if(!titleLength(title.length)){
+          document.getElementById("title").value = "";
+          document.getElementById("url").value = "";
+          alert("Enter Title of length greater than 3");
+          }
+          else if(!checkURL(url)){
+          document.getElementById("title").value = "";
+          document.getElementById("url").value = "";
+          alert("Enter valid URL");
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

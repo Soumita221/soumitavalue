@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News</title>
+    <link rel="stylesheet" href="./custom.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row1">
+        <p style="margin-left: 40px;">
+          <span style="font-size: 20px;"
+            ><strong
+              ><a href="index.html">Hacker News</a>&nbsp; &nbsp; &nbsp;</strong
+            ></span
+          ><span class="tab"><a href="index.html">News</a>&nbsp; </span
+          ><span style="font-size: 16px;">&nbsp;|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="analytics.html">Analytics</a>&nbsp;
+            &nbsp;</span
+          ><span style="font-size: 16px;">|&nbsp;</span
+          ><span class="tab">
+            &nbsp;<a href="notes.html">Notes</a>&nbsp; &nbsp;</span
+          ><span style="font-size: 16px;">|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="submit.html">Submit</a></span
+          >
+        </p>
+      </div>
+      <div class="row2">
+        <div id="all_notes"></div>
+      </div>
+    </div>
+
+    <script src="./custom.js"></script>
+    <script>
+      var comment_html = "";
+      var retrievedData = localStorage.getItem("n");
+      var no_of_items = parseInt(JSON.parse(retrievedData)[0]);
+      var data = JSON.parse(localStorage.getItem("title_ls"));
+      var url_data = JSON.parse(localStorage.getItem("url_ls"));
+      for (i = 0; i <= no_of_items; i++) {
+        var cmt_ls = "cmt_ls" + i.toString();
+        var cmt_ls_time = "cmt_ls_time" + i.toString();
+        var comment = JSON.parse(retrievedData);
+        retrievedData = localStorage.getItem(cmt_ls_time);
+        var timestmp = JSON.parse(retrievedData);
+        if (localStorage.getItem(cmt_ls)) {
+          var retrievedData = localStorage.getItem(cmt_ls);
+          var comment = JSON.parse(retrievedData);
+          var x = comment.length;
+          var t = data[i];
+          var url = url_data[i];
+          for (j = 0; j < x; j++) {
+            var curr = Date.now()
+            var elsp = timeDifference(timestmp[j], curr);
+
+            comment_html +=
+              '<p class="cmt_time">' +
+              elsp +
+              ' &nbsp;&nbsp;&nbsp;| <span class="title_all_cmts">on: <a href="' +
+              url +
+              '">' +
+              t +
+              "</a> </span></p>";
+            comment_html +=
+              '<p class="cmts">' +
+              comment[j] +
+              '</p><span class="cmt_time cursor" onclick="del(' +
+              i +
+              "," +
+              j +
+              ')">Delete</span><hr>';
+          }
+        }
+      }
+      if (document.getElementById("all_notes")) {
+        document.getElementById("all_notes").innerHTML += comment_html;
+      }
+
+
+
+
+      
+    </script>
+  </body>
+</html>

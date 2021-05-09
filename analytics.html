@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News</title>
+    <link rel="stylesheet" href="./custom.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row1">
+        <p style="margin-left: 40px;">
+          <span style="font-size: 20px;"
+            ><strong
+              ><a href="index.html">Hacker News</a>&nbsp; &nbsp; &nbsp;</strong
+            ></span
+          ><span class="tab"><a href="index.html">News</a>&nbsp; </span
+          ><span style="font-size: 16px;">&nbsp;|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="analytics.html">Analytics</a>&nbsp;
+            &nbsp;</span
+          ><span style="font-size: 16px;">|&nbsp;</span
+          ><span class="tab">
+            &nbsp;<a href="notes.html">Notes</a>&nbsp; &nbsp;</span
+          ><span style="font-size: 16px;">|</span
+          ><span class="tab"
+            >&nbsp; &nbsp;<a href="submit.html">Submit</a></span
+          >
+        </p>
+      </div>
+      <div class="row2">
+        <button onClick="sort_by_vote()" id="vote_show_hide">
+          Sort By Votes
+        </button>
+        <button onClick="sort_by_spam()" id="spam_show_hide">
+          Sort by Spam
+        </button>
+        <br /></div><hr><div class="row2">
+        <div id="vote"></div>
+        <div id="spam"></div>
+      </div>
+    </div>
+
+    <script src="./custom.js"></script>
+    <script>
+
+
+    //Freshly storing the total count of each root domain votes in local storage
+      var retrievedData = localStorage.getItem("n");
+      var n = parseInt(JSON.parse(retrievedData)[0]);
+      var arr = JSON.parse(localStorage.getItem("url_ls"));
+      for (i = 0; i < n; i++) {
+        var dm = extractRootDomain(arr[i]);
+        localStorage.removeItem(dm);
+      }
+      for (i = 0; i < n; i++) {
+        var vt = "vote[" + i.toString() + "]";
+        var val = 0;
+        if (localStorage.getItem(vt)) {
+          var dm = extractRootDomain(arr[i]);
+          val = parseInt(localStorage.getItem(vt));
+          if (localStorage.getItem(dm)) {
+            entries = parseInt(localStorage.getItem(dm));
+            var temp = entries + val;
+            localStorage.setItem(dm, temp);
+          } else {
+            localStorage.setItem(dm, val);
+          }
+        }
+      }
+      var a = [];
+      sort_by_vote();
+      
+
+
+      //Freshly storing the total count of each root domain flags in local storage
+      var arr2 = JSON.parse(localStorage.getItem("url_ls"));
+      for (i = 0; i < n; i++) {
+        var temp = extractRootDomain(arr2[i]);
+        var dm= temp +".spam"
+        localStorage.removeItem(dm);
+      }
+      for (i = 0; i < n; i++) {
+        var fl = "flg[" + i.toString() + "]";
+        var val = 0;
+        if (localStorage.getItem(fl)) {
+          var temp = extractRootDomain(arr2[i]);
+          var dm = temp + ".spam"
+          val = parseInt(localStorage.getItem(fl));
+          if (localStorage.getItem(dm)) {
+            entries = parseInt(localStorage.getItem(dm));
+            var temp = entries + val;
+            localStorage.setItem(dm, temp);
+          } else {
+            localStorage.setItem(dm, val);
+          }
+        }
+      }
+      var fa = [];
+      sort_by_spam();
+      
+    </script>
+  </body>
+</html>
